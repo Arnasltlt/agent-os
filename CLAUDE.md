@@ -100,11 +100,38 @@ context/
 
 Any readable format works: markdown, YAML, CSV, JSON, images, PDFs. Organize by topic, use whatever structure makes the content clear. Include a README.md in a folder if it helps explain what's there.
 
+### Context indexes (`index.md`)
+
+Every context folder should have an auto-maintained `index.md` that summarizes what's in it. This is the scaling mechanism — agents read indexes first, then drill into specific files only when needed.
+
+```
+context/competitors/
+├── index.md               ← Auto-maintained summary of this folder
+├── competitor-a.md
+├── competitor-b.md
+└── pricing-landscape.md
+```
+
+An index.md should include:
+- A brief summary of what this context folder covers
+- A list of every file in the folder with a one-line description
+- Key facts or themes that span multiple files
+- Last-updated date
+
+When you add, remove, or significantly modify a file in a context folder, update that folder's `index.md`. This keeps the knowledge base navigable without loading everything.
+
+At the root level, `context/` itself should have an `index.md` that summarizes all context folders — a table of contents for the entire knowledge base.
+
+### Filing outputs back to context
+
+When a task produces knowledge — research, analysis, a report — file it back into the relevant context folder. This way every question you answer and every exploration you do makes the knowledge base better for future work. Update the folder's `index.md` after filing.
+
 Rules for context:
 - Context is your knowledge base. You may read it, update it, and create new context as the business needs evolve.
 - Keep context accurate. If something is outdated, update it. If something is missing, flag it or create it.
 - Don't invent business facts. If you don't know something, ask the founder rather than guessing.
 - Load selectively. A task's `context` field tells you which sources to read.
+- Maintain `index.md` files. When you change a context folder, update its index.
 
 ## Actions
 
@@ -175,6 +202,12 @@ Each stage's CONTEXT.md is a contract:
 The output/ folder of each stage is a review gate. The human can open, read, edit, and save before the next stage runs. The agent picks up whatever the human left there.
 
 This pattern is optional. Most actions don't need it. Use it when you have a workflow that runs repeatedly with different inputs.
+
+### Built-in actions
+
+Some actions are part of the convention itself:
+
+- **`lint-context`** — A health check action that audits the entire context folder for staleness, inconsistencies, gaps, missing indexes, and interesting connections. Run it periodically to keep the knowledge base healthy. See `actions/lint-context/README.md`.
 
 Rules for actions:
 - Actions are instructions, not permissions. They tell you how to do something well.

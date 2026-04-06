@@ -13,4 +13,12 @@
 #       location: /absolute/path/to/repo
 #       cwd: /absolute/path/to/repo
 
-actions: []
+actions:
+  - id: lint-context
+    name: Lint Context
+    status: active
+    path: actions/lint-context
+    instructions: Audit context/ for staleness, inconsistencies, gaps, and missing indexes.
+    target:
+      kind: filesystem
+      location: context/

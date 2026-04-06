@@ -10,6 +10,16 @@ Work, knowledge, and execution live in **plain files** so any agent can orient f
 
 The filesystem is the source of truth. Optional tooling in `app/` and `mcp-kanban/` sits on top.
 
+## Influences
+
+Agent OS is built on ideas from three sources:
+
+**Agent OS primitives** — the original contribution. Three primitives (lists, context, actions) that make an entire business legible to any AI agent. Registry-based discovery, read/write permission separation, and a task queue that handles both ad-hoc work and repeatable pipelines.
+
+**Interpretable Context Methodology (ICM)** — Jake Van Clief's research ([arXiv:2603.16021](https://arxiv.org/abs/2603.16021)) on folder structure as agentic architecture. ICM contributes layered context loading, the factory/product separation (`_config/` for stable identity vs. live working context), pipeline actions with numbered stages and review gates, and the principle that plain text makes systems observable by default.
+
+**LLM Knowledge Bases** — Andrej Karpathy's pattern (April 2026) for using LLMs to build and maintain knowledge bases. Karpathy contributes the auto-maintained `index.md` convention (the scaling mechanism that makes selective loading work), the `lint-context` action (periodic health checks for consistency, gaps, and connections), and the insight that query outputs should flow back into context so work compounds over time.
+
 ## Quick start
 
 ```bash

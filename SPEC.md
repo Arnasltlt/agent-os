@@ -106,9 +106,36 @@ Each context source should have its own folder at `context/<id>/` containing:
 
 - `README.md`: human-readable explanation
 - `source.yml`: machine-readable manifest
+- `index.md`: auto-maintained summary (see below)
 - optional fetched artifacts or setup docs
 
 Context is read-first metadata. It does not grant write permission by itself.
+
+### Context Index Convention
+
+Every context folder should contain an `index.md` file that the agent auto-maintains.
+This is the primary mechanism for scaling context beyond what fits in a single
+context window.
+
+An `index.md` should contain:
+
+- Brief summary of what the folder covers
+- List of every file with a one-line description
+- Key facts or themes spanning multiple files
+- Last-updated date
+
+The root `context/` directory should also have an `index.md` that serves as a
+table of contents across all context folders.
+
+Agents should:
+1. Read `index.md` files first when exploring context
+2. Drill into specific files only when the index indicates relevance
+3. Update `index.md` whenever they add, remove, or significantly modify files
+   in that folder
+
+This convention replaces the need for RAG or vector search at small-to-medium
+scale (~100 documents, ~400K words). At larger scales, additional search tooling
+may be layered on top.
 
 ## Action Registry Schema
 
