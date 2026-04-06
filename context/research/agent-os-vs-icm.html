@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent OS + ICM: Where the Ideas Live</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0a0a0a; color: #e0e0e0; padding: 40px;
+    display: flex; flex-direction: column; align-items: center;
+    min-height: 100vh;
+  }
+  h1 { font-size: 22px; font-weight: 600; margin-bottom: 8px; color: #fff; text-align: center; }
+  .subtitle { font-size: 14px; color: #888; margin-bottom: 48px; text-align: center; }
+
+  .diagram-container {
+    width: 100%; max-width: 900px; position: relative;
+  }
+
+  /* === SECTION 1: The Two Scopes === */
+  .scope-section { margin-bottom: 64px; }
+  .scope-section h2 { font-size: 16px; font-weight: 500; color: #888; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 1.5px; }
+
+  .scope-row {
+    display: flex; gap: 24px; align-items: stretch;
+  }
+  .scope-box {
+    flex: 1; border-radius: 12px; padding: 28px; position: relative;
+  }
+  .scope-agent-os {
+    border: 2px solid #3b82f6; background: rgba(59,130,246,0.06);
+  }
+  .scope-icm {
+    border: 2px solid #f59e0b; background: rgba(245,158,11,0.06);
+  }
+  .scope-box .label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+    position: absolute; top: -10px; left: 20px; padding: 0 8px;
+    background: #0a0a0a;
+  }
+  .scope-agent-os .label { color: #3b82f6; }
+  .scope-icm .label { color: #f59e0b; }
+  .scope-box h3 { font-size: 18px; font-weight: 600; margin-bottom: 6px; color: #fff; }
+  .scope-box .purpose { font-size: 14px; color: #aaa; margin-bottom: 16px; line-height: 1.5; }
+  .scope-box .primitives { display: flex; flex-wrap: wrap; gap: 8px; }
+  .primitive {
+    font-size: 12px; padding: 6px 12px; border-radius: 6px; font-weight: 500;
+  }
+  .scope-agent-os .primitive { background: rgba(59,130,246,0.15); color: #93c5fd; }
+  .scope-icm .primitive { background: rgba(245,158,11,0.15); color: #fcd34d; }
+
+  /* === SECTION 2: The Key Insight === */
+  .shared-section { margin-bottom: 64px; }
+  .shared-section h2 { font-size: 16px; font-weight: 500; color: #888; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 1.5px; }
+  .shared-box {
+    border: 2px solid #22c55e; background: rgba(34,197,94,0.06);
+    border-radius: 12px; padding: 28px; text-align: center;
+  }
+  .shared-box .quote {
+    font-size: 18px; font-style: italic; color: #fff; line-height: 1.6; max-width: 700px; margin: 0 auto 16px;
+  }
+  .shared-box .attribution { font-size: 13px; color: #888; }
+  .shared-pills { display: flex; justify-content: center; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+  .shared-pill {
+    font-size: 12px; padding: 6px 14px; border-radius: 6px;
+    background: rgba(34,197,94,0.15); color: #86efac; font-weight: 500;
+  }
+
+  /* === SECTION 3: The Combination === */
+  .combine-section { margin-bottom: 64px; }
+  .combine-section h2 { font-size: 16px; font-weight: 500; color: #888; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 1.5px; }
+
+  .architecture {
+    border: 2px solid #3b82f6; border-radius: 16px; padding: 32px; position: relative;
+    background: rgba(59,130,246,0.03);
+  }
+  .architecture .outer-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+    color: #3b82f6; position: absolute; top: -10px; left: 24px; background: #0a0a0a; padding: 0 8px;
+  }
+
+  .layer-row { display: flex; gap: 16px; margin-bottom: 16px; align-items: stretch; }
+  .layer-row:last-child { margin-bottom: 0; }
+
+  .layer {
+    border-radius: 10px; padding: 20px; flex: 1; position: relative;
+  }
+  .layer .layer-num {
+    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+    margin-bottom: 6px;
+  }
+  .layer h4 { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+  .layer p { font-size: 12px; line-height: 1.5; }
+
+  /* Blue layers = Agent OS origin */
+  .layer-blue { background: rgba(59,130,246,0.10); border: 1px solid rgba(59,130,246,0.25); }
+  .layer-blue .layer-num { color: #3b82f6; }
+  .layer-blue p { color: #93c5fd; }
+
+  /* Amber layers = borrowed from ICM */
+  .layer-amber { background: rgba(245,158,11,0.10); border: 1px solid rgba(245,158,11,0.25); }
+  .layer-amber .layer-num { color: #f59e0b; }
+  .layer-amber p { color: #fcd34d; }
+
+  /* Green = shared idea */
+  .layer-green { background: rgba(34,197,94,0.10); border: 1px solid rgba(34,197,94,0.25); }
+  .layer-green .layer-num { color: #22c55e; }
+  .layer-green p { color: #86efac; }
+
+  .full-width { flex: 1 1 100%; }
+
+  /* Arrows between layers */
+  .arrow-row {
+    display: flex; justify-content: center; margin: -4px 0;
+    font-size: 18px; color: #444;
+  }
+
+  /* === SECTION 4: What goes where === */
+  .mapping-section { margin-bottom: 64px; }
+  .mapping-section h2 { font-size: 16px; font-weight: 500; color: #888; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 1.5px; }
+
+  .mapping-table {
+    width: 100%; border-collapse: collapse;
+  }
+  .mapping-table th {
+    text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1.5px; padding: 12px 16px; border-bottom: 1px solid #333;
+  }
+  .mapping-table th:nth-child(1) { color: #888; }
+  .mapping-table th:nth-child(2) { color: #3b82f6; }
+  .mapping-table th:nth-child(3) { color: #f59e0b; }
+  .mapping-table th:nth-child(4) { color: #22c55e; }
+
+  .mapping-table td {
+    padding: 14px 16px; border-bottom: 1px solid #1a1a1a; font-size: 13px;
+    vertical-align: top; line-height: 1.5;
+  }
+  .mapping-table td:first-child { color: #fff; font-weight: 500; }
+  .mapping-table td:nth-child(2) { color: #93c5fd; }
+  .mapping-table td:nth-child(3) { color: #fcd34d; }
+  .mapping-table td:nth-child(4) { color: #86efac; }
+  .mapping-table tr:hover { background: rgba(255,255,255,0.02); }
+
+  /* === Legend === */
+  .legend {
+    display: flex; gap: 32px; margin-bottom: 48px; justify-content: center; flex-wrap: wrap;
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-blue { background: #3b82f6; }
+  .dot-amber { background: #f59e0b; }
+  .dot-green { background: #22c55e; }
+
+  /* === SECTION 5: Transfer pattern === */
+  .transfer-section { margin-bottom: 40px; }
+  .transfer-section h2 { font-size: 16px; font-weight: 500; color: #888; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 1.5px; }
+  .transfer-steps {
+    display: flex; gap: 16px; flex-wrap: wrap;
+  }
+  .transfer-step {
+    flex: 1; min-width: 200px; border-radius: 10px; padding: 20px;
+    background: rgba(255,255,255,0.04); border: 1px solid #222;
+  }
+  .transfer-step .step-num {
+    font-size: 28px; font-weight: 700; color: #333; margin-bottom: 8px;
+  }
+  .transfer-step h4 { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 6px; }
+  .transfer-step p { font-size: 12px; color: #999; line-height: 1.5; }
+  .transfer-step code {
+    font-size: 11px; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 3px; color: #ccc;
+  }
+</style>
+</head>
+<body>
+
+<h1>Agent OS + ICM: Where the Ideas Live</h1>
+<p class="subtitle">What's yours, what's his, and what the combination looks like</p>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot dot-blue"></div> Agent OS (yours)</div>
+  <div class="legend-item"><div class="legend-dot dot-amber"></div> ICM / Van Clief</div>
+  <div class="legend-item"><div class="legend-dot dot-green"></div> Shared ground</div>
+</div>
+
+<div class="diagram-container">
+
+  <!-- SECTION 1 -->
+  <div class="scope-section">
+    <h2>Two different scopes, same foundation</h2>
+    <div class="scope-row">
+      <div class="scope-box scope-agent-os">
+        <div class="label">Agent OS</div>
+        <h3>The whole business</h3>
+        <p class="purpose">Make an entire business legible to any AI agent. Everything it knows, everything it needs to do, everything it's allowed to change.</p>
+        <div class="primitives">
+          <span class="primitive">Lists (work)</span>
+          <span class="primitive">Context (knowledge)</span>
+          <span class="primitive">Actions (permissions)</span>
+          <span class="primitive">Multi-agent</span>
+          <span class="primitive">Task queue</span>
+          <span class="primitive">Registries</span>
+        </div>
+      </div>
+      <div class="scope-box scope-icm">
+        <div class="label">ICM</div>
+        <h3>One workflow pipeline</h3>
+        <p class="purpose">Take a repeatable workflow through sequential stages, with the right context at each stage and human review between stages.</p>
+        <div class="primitives">
+          <span class="primitive">Numbered stages</span>
+          <span class="primitive">Layered context</span>
+          <span class="primitive">Stage contracts</span>
+          <span class="primitive">Review gates</span>
+          <span class="primitive">Factory/product</span>
+          <span class="primitive">Token budgets</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="shared-section">
+    <h2>The shared belief</h2>
+    <div class="shared-box">
+      <div class="quote">"The filesystem is the source of truth. The folder structure IS the orchestration. No framework, no database, no server needed."</div>
+      <div class="attribution">— The idea you both arrived at independently</div>
+      <div class="shared-pills">
+        <span class="shared-pill">Files over frameworks</span>
+        <span class="shared-pill">Plain text as interface</span>
+        <span class="shared-pill">Human-readable state</span>
+        <span class="shared-pill">Observable by default</span>
+        <span class="shared-pill">Portable (just copy the folder)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: Combined architecture -->
+  <div class="combine-section">
+    <h2>The combined architecture</h2>
+    <div class="architecture">
+      <div class="outer-label">Agent OS — The Business Container</div>
+
+      <div class="layer-row">
+        <div class="layer layer-blue full-width">
+          <div class="layer-num">Entry point</div>
+          <h4>AGENT.md</h4>
+          <p>Identity & orientation only. "This is Solis. Here's what's in this folder. Read the routing file next." ~800 tokens. Yours.</p>
+        </div>
+      </div>
+
+      <div class="arrow-row">↓</div>
+
+      <div class="layer-row">
+        <div class="layer layer-amber" style="flex:2">
+          <div class="layer-num">Borrowed from ICM</div>
+          <h4>Routing layer</h4>
+          <p>Maps tasks → context sources → actions. Tells the agent where to go next without loading everything. Van Clief's Layer 1 idea.</p>
+        </div>
+        <div class="layer layer-blue" style="flex:1">
+          <div class="layer-num">Yours</div>
+          <h4>list.yml</h4>
+          <p>Task queue. Ad-hoc work + pipeline work. Already has context[] and actions[] fields — that IS the routing.</p>
+        </div>
+      </div>
+
+      <div class="arrow-row">↓</div>
+
+      <div class="layer-row">
+        <div class="layer layer-amber">
+          <div class="layer-num">Borrowed from ICM</div>
+          <h4>context/_config/</h4>
+          <p>Stable business knowledge: company, brand, voice. The "factory." Internalize as constraints. Rarely changes.</p>
+        </div>
+        <div class="layer layer-blue">
+          <div class="layer-num">Yours</div>
+          <h4>context/sources/</h4>
+          <p>Live business context: customers, competitors, website. Indexed by registry.yml. Read-model.</p>
+        </div>
+        <div class="layer layer-green">
+          <div class="layer-num">Shared</div>
+          <h4>context/working/</h4>
+          <p>Per-task input material. The "product." Process as input. Changes every time.</p>
+        </div>
+      </div>
+
+      <div class="arrow-row">↓</div>
+
+      <div class="layer-row">
+        <div class="layer layer-blue" style="flex:1">
+          <div class="layer-num">Yours</div>
+          <h4>actions/</h4>
+          <p>Permission boundaries + execution instructions. What agents may change and where. Simple tasks live here as single READMEs.</p>
+        </div>
+        <div class="layer layer-amber" style="flex:1">
+          <div class="layer-num">Borrowed from ICM</div>
+          <h4>actions/pipelines/</h4>
+          <p>When an action is really a multi-step workflow: numbered stage folders, contracts, output/ handoffs, review gates. Optional pattern.</p>
+        </div>
+      </div>
+
+      <div class="arrow-row">↓</div>
+
+      <div class="layer-row">
+        <div class="layer layer-green full-width">
+          <div class="layer-num">Shared</div>
+          <h4>Outputs are files. State is the filesystem. Everything is inspectable.</h4>
+          <p>Log outputs, stage artifacts, task results — all plain text, all human-readable, all editable. No hidden state anywhere.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: Mapping table -->
+  <div class="mapping-section">
+    <h2>Concept mapping</h2>
+    <table class="mapping-table">
+      <thead>
+        <tr>
+          <th>Concept</th>
+          <th>Agent OS</th>
+          <th>ICM / Van Clief</th>
+          <th>Combined</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Entry point</td>
+          <td>AGENT.md (does everything)</td>
+          <td>CLAUDE.md → CONTEXT.md (layered)</td>
+          <td>AGENT.md stays, but lean. Routing is separate.</td>
+        </tr>
+        <tr>
+          <td>What to do</td>
+          <td>list.yml task queue</td>
+          <td>Numbered stage folders</td>
+          <td>list.yml for all tasks. Stages only inside pipeline actions.</td>
+        </tr>
+        <tr>
+          <td>Business knowledge</td>
+          <td>context/ with registry</td>
+          <td>_config/ + references/</td>
+          <td>context/ split: _config (stable) vs sources (live) vs working (per-run)</td>
+        </tr>
+        <tr>
+          <td>What can change</td>
+          <td>actions/ with permissions</td>
+          <td>No permission model</td>
+          <td>Keep actions/. Add optional stages/ pattern inside for pipelines.</td>
+        </tr>
+        <tr>
+          <td>Context loading</td>
+          <td>Load everything</td>
+          <td>5-layer selective loading</td>
+          <td>Task specifies which context to load. Agent loads only that.</td>
+        </tr>
+        <tr>
+          <td>Human review</td>
+          <td>"← founder" tags on tasks</td>
+          <td>Review gates between stages</td>
+          <td>Tags for simple tasks. output/ folders for pipeline stages.</td>
+        </tr>
+        <tr>
+          <td>Scope</td>
+          <td>Entire business</td>
+          <td>One workflow</td>
+          <td>Business is the container. Workflows are actions inside it.</td>
+        </tr>
+        <tr>
+          <td>Portability</td>
+          <td>Copy the instance folder</td>
+          <td>Copy the workspace folder</td>
+          <td>Copy the folder. Drop a CLAUDE.md. Agent orients.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 5: Transfer to real projects -->
+  <div class="transfer-section">
+    <h2>How this transfers to any real project</h2>
+    <div class="transfer-steps">
+      <div class="transfer-step">
+        <div class="step-num">1</div>
+        <h4>Drop a CLAUDE.md</h4>
+        <p>Lean entry point. Identity + pointer to structure. This is the only file that's truly required. Everything else is optional layers you add when the project needs them.</p>
+      </div>
+      <div class="transfer-step">
+        <div class="step-num">2</div>
+        <h4>Add <code>context/</code></h4>
+        <p>What the agent needs to know. Split stable config from live sources when it matters. Start with one folder. Grow as needed.</p>
+      </div>
+      <div class="transfer-step">
+        <div class="step-num">3</div>
+        <h4>Add <code>lists/</code></h4>
+        <p>What needs to happen. A single markdown checklist is fine. Upgrade to YAML with metadata when the project outgrows a checklist.</p>
+      </div>
+      <div class="transfer-step">
+        <div class="step-num">4</div>
+        <h4>Add <code>actions/</code></h4>
+        <p>What can be changed and how. Simple actions = a README. Repeatable pipelines = numbered stage folders (ICM pattern). Only add this layer when the project has write targets.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

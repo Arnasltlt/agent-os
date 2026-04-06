@@ -1,0 +1,25 @@
+list:
+  - id: TASK-001
+    title: Build example agent-os instances for different business types (SaaS, agency, creator)
+    status: ready
+    priority: medium
+    owner: agent
+
+  - id: TASK-002
+    title: Write up the "why files beat apps for agents" argument as a public post
+    status: ready
+    priority: high
+    owner: agent
+
+  - id: TASK-003
+    title: Decide whether to open-source agent-os or keep it private
+    status: done
+    priority: critical
+    owner: founder
+    description: Fully open source (MIT). Public GitHub repo.
+
+  - id: TASK-004
+    title: Set up the Solio Pamoka agent-os instance with real context
+    status: in_progress
+    priority: high
+    owner: agent

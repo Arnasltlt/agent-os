@@ -1,70 +1,42 @@
-# agent-os
+# Agent OS
 
 An open-source operating system for AI-first businesses.
 
-**A file-based convention for making your business legible to AI agents.**
+Work, knowledge, and execution live in **plain files** so any agent can orient fast. Three primitives:
 
-## What is this?
+- **Lists** — what to do (`list.yml`, or markdown checklists under `lists/`)
+- **Context** — what to know (`context/`, indexed by `context/registry.yml`)
+- **Actions** — how and where to execute (`actions/`, indexed by `actions/registry.yml`)
 
-agent-os is a file-first convention that gives AI agents structure, memory, and
-permission boundaries. The core product is the filesystem layout and schema:
-tasks, context, actions, and logs. The local app is optional tooling layered on
-top of that convention.
+The filesystem is the source of truth. Optional tooling in `app/` and `mcp-kanban/` sits on top.
 
-## Core Philosophy
-
-1. **Files are the source of truth.** Everything lives in plain text: YAML,
-   Markdown, CSV, and code.
-2. **The convention comes first.** Agents should be able to self-orient from the
-   files alone. A UI can help, but it is not the foundation.
-3. **Agents are bounded, not autonomous.** Context explains what exists. Actions
-   define what may be changed and where.
-4. **Humans own intent.** Humans set priorities and decide what work matters.
-
-## Canonical Files
-
-Every instance is built around:
-
-```text
-├── AGENT.md
-├── list.yml
-├── context/registry.yml
-├── actions/registry.yml
-└── log/
-```
-
-- **List**: tasks to execute
-- **Context**: read-model sources agents use to understand the business
-- **Actions**: explicit writable targets and execution instructions
-- **Log**: output and archives
-
-See [SPEC.md](/Users/seima/Documents/cursor/agent-os/SPEC.md) for the exact
-schema.
-
-## Quick Start
+## Quick start
 
 ```bash
 npx create-agent-os my-business
 cd my-business
-npx agent-os
 ```
 
-This will:
+From a clone of this repo before publish, run `node scripts/create-agent-os.js` instead (same scaffold).
 
-1. Scaffold the canonical agent-os files for a new business
-2. Let agents orient immediately from `AGENT.md`, `list.yml`, `context/`, and `actions/`
-3. Optionally launch the local app for file browsing, task running, and context management
+Read [CLAUDE.md](CLAUDE.md) for how agents should work in this repo. The full instance schema is in [SPEC.md](SPEC.md).
 
-## Project Status
+## Repo layout
 
-Early stage. The convention is being hardened first. The app remains in the
-repo as optional tooling, not the foundation.
+| Path | Purpose |
+|------|---------|
+| `SPEC.md` | Convention and YAML schemas |
+| `template/` | Files copied by `create-agent-os` |
+| `ops/` | Dogfood instance for building Agent OS |
+| `app/` | Local UI + server (Hono, React, Vite) |
+| `mcp-kanban/` | MCP server + kanban UI over `lists/` |
 
-## Inspirations
+## Develop the app
 
-- **OpenClaw**: file-based, human-readable agent architecture
-- **solio-ops**: the production operating system this is being extracted from
-- **Replit Agent**: showed that thin interfaces can sit on top of agent work
+```bash
+npm run install:all
+npm run dev
+```
 
 ## License
 
