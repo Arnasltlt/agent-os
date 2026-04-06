@@ -1,0 +1,14 @@
+# Context registry.
+# Each entry describes a readable source under context/<id>/.
+#
+# Example:
+# context:
+#   - id: company
+#     name: Company Overview
+#     type: folder
+#     path: context/company
+#     status: active
+#     editable: false
+#     description: Core business facts and operating context.
+
+context: []

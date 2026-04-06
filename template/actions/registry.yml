@@ -1,0 +1,16 @@
+# Action registry.
+# Each entry describes an explicit writable target under actions/<id>/.
+#
+# Example:
+# actions:
+#   - id: edit-website
+#     name: Edit Website
+#     status: active
+#     path: actions/edit-website
+#     context_id: website
+#     target:
+#       kind: repository
+#       location: /absolute/path/to/repo
+#       cwd: /absolute/path/to/repo
+
+actions: []

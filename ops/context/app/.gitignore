@@ -1,0 +1,2 @@
+# Ignore cloned repo content (if a repo/ subdirectory is ever added)
+repo/

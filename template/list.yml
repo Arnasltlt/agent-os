@@ -1,0 +1,26 @@
+# The task queue.
+# Humans own ordering and priority. Agents may update status, but should not
+# reorder tasks.
+#
+# Required per task: id, title, status, context, actions, depends_on
+# Optional per task: priority, description, clarification_needed, owner
+#
+# `context` values are context source ids from context/registry.yml.
+# `actions` values are action ids from actions/registry.yml.
+#
+# Example:
+# list:
+#   - id: TASK-001
+#     title: Write onboarding email
+#     status: ready
+#     context:
+#       - company
+#       - email
+#     actions:
+#       - edit-email-assets
+#     depends_on: []
+#     priority: medium
+#     description: >
+#       Draft the onboarding email and update the send log assets.
+
+list: []

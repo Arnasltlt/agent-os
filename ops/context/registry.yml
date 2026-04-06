@@ -1,0 +1,25 @@
+context:
+  - id: app
+    name: agent-os App — Main Website (Source Code)
+    type: repository
+    path: context/app
+    status: needs_setup
+    editable: true
+    default_action_id: edit-app
+    description: >
+      The main website application being actively built. React 19 + TypeScript
+      frontend (client/) and Node.js + Hono backend (server/). Primary codebase
+      that agents will read and modify. Status is needs_setup until a canonical
+      git remote URL is recorded in context/app/source.yml.
+
+  - id: project-docs
+    name: Project Documentation (Architecture & Roadmap)
+    type: folder
+    path: context/project-docs
+    status: active
+    editable: false
+    description: >
+      Architecture and roadmap documentation for the agent-os project, stored
+      directly inside this context source folder (ops/context/project-docs/).
+      Agents should read this before proposing structural changes or planning
+      new features. Contains ARCHITECTURE.md and ROADMAP.md.

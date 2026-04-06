@@ -1,0 +1,25 @@
+id: edit-app
+name: Edit agent-os App (Main Website)
+status: active
+path: actions/edit-app
+context_id: app
+auto_created: true
+instructions: >
+  This is the primary action for editing the agent-os main website application.
+  Work directly in the provisional local path below.
+  Do NOT edit context/app/repo/ — that is a read-only snapshot.
+  When the canonical git remote URL is added to context/app/source.yml,
+  always pull from remote before making changes and push / open a PR when done.
+  Follow the project's existing conventions: React 19 + TypeScript frontend
+  under client/, Hono backend under server/. Run linting and tests before
+  committing. Never store secrets or credentials in tracked files.
+target:
+  kind: repository
+  # Provisional: local machine path — replace with remote_url once known
+  location: /Users/seima/Documents/cursor/agent-os/app
+  cwd: /Users/seima/Documents/cursor/agent-os/app
+  remote_url: ""          # populate from context/app/source.yml when available
+  note: >
+    No canonical git remote URL was provided at onboarding. The target is a
+    provisional local path. Set remote_url here and in context/app/source.yml
+    to fully complete this action setup.

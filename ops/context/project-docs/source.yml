@@ -1,0 +1,43 @@
+id: project-docs
+name: Project Documentation (Architecture & Roadmap)
+type: folder
+status: active
+editable: false
+created: "2026-03-23"
+description: >
+  Local folder containing architecture and roadmap documentation for the agent-os project.
+  Authoritative reference for system design decisions, component boundaries,
+  and planned development milestones. Agents should read this folder before making
+  structural changes or planning new features.
+
+local_path: "context/project-docs"
+access_note: >
+  The docs live directly inside this context source folder (ops/context/project-docs/).
+  Relative path from ops/: context/project-docs
+  Absolute path: ~/Documents/cursor/agent-os/ops/context/project-docs
+
+actual_contents:
+  - file: ARCHITECTURE.md
+    description: >
+      System design document covering the three primitives (list.yml, context/, actions/),
+      component diagram, execution flow, and technology choices.
+  - file: ROADMAP.md
+    description: >
+      Development roadmap organized into five phases: MVP, Agent Integration,
+      Setup Wizard, Integrations, and Community. Each phase has a task checklist.
+
+agent_usage: >
+  Read docs in this folder before proposing new features, refactoring existing
+  components, or making decisions that affect system architecture. Roadmap docs
+  indicate priority ordering — prefer implementing higher-priority items first.
+  Architecture docs are authoritative over code comments when there is a conflict.
+
+tags:
+  - architecture
+  - roadmap
+  - documentation
+  - planning
+  - design
+
+artifacts: []
+requirements: []

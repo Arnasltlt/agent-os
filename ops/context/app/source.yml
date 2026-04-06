@@ -1,0 +1,67 @@
+id: app
+name: agent-os App — Main Website (Source Code)
+type: repository
+status: needs_setup
+editable: true
+default_action_id: edit-app
+
+# ── Remote identity ─────────────────────────────────────────────────────────
+# No canonical git remote URL was provided at onboarding time.
+# Add the remote URL below and set status → active once it is known.
+remote_url: ""          # e.g. https://github.com/org/repo.git
+
+# ── Local snapshot (read-only) ───────────────────────────────────────────────
+# Populated by cloning from remote_url into context/app/repo/
+# Do NOT treat this as the canonical writable target.
+local_path: context/app/repo
+
+# ── Provisional local path (same machine only) ───────────────────────────────
+# Used by the edit-app action until a canonical remote is confirmed.
+provisional_local_path: /Users/seima/Documents/cursor/agent-os/app
+
+tech_stack:
+  frontend: "React 19, Vite 8, TypeScript 5.9"
+  backend: "Hono 4.7, Node.js 22, TypeScript 5.9, tsx 4.19"
+  agent_sdk: "@anthropic-ai/claude-agent-sdk 0.2.81"
+  data_layer: "YAML (js-yaml), Markdown — filesystem only, no database"
+  streaming: "Server-Sent Events (SSE)"
+
+entry_points:
+  - client/src/main.tsx                  # React entry point
+  - client/src/App.tsx                   # Root React component (all UI)
+  - client/src/api.ts                    # HTTP + SSE client
+  - server/src/index.ts                  # All API routes (~610 lines)
+  - server/src/providers/claude-code.ts  # Claude Code SDK provider
+
+ports:
+  frontend: 5173
+  backend: 3001
+
+key_api_routes:
+  - "GET  /api/board           — tasks, context sources, project name"
+  - "GET  /api/actions         — list writable actions"
+  - "POST /api/agent/start     — launch Claude Code agent (SSE stream)"
+  - "POST /api/context/start   — onboard a new context source (SSE stream)"
+  - "GET  /api/files           — ops-directory file tree"
+  - "PATCH /api/actions/:id    — update action target/instructions"
+  - "PATCH /api/tasks/:id      — update task status, archive completed"
+
+description: >
+  The main website application being actively developed — the agent-os web UI.
+  Contains a React 19 + TypeScript + Vite frontend (client/) and a Node.js +
+  Hono backend (server/). The backend orchestrates Claude Code agents via SSE
+  streaming, manages the YAML-based task queue (list.yml), and handles CRUD
+  for context sources (context/registry.yml) and writable actions
+  (actions/registry.yml). The frontend provides a kanban board, context
+  manager, actions manager, file browser, and agent conversation UI.
+  This is the primary codebase that agents will read and modify.
+
+notes: >
+  Status is needs_setup because no canonical git remote URL was provided.
+  The repo/ subdirectory is excluded from git tracking via .gitignore and
+  is a read snapshot only. The canonical writable target for agents is
+  configured in actions/edit-app/. No credentials or secrets are required
+  to read or build the application.
+
+onboarded_at: "2026-03-24"
+last_updated: "2026-03-25"

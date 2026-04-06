@@ -1,0 +1,12 @@
+actions:
+  - id: edit-app
+    name: Edit agent-os App (Main Website)
+    status: active
+    path: actions/edit-app
+    context_id: app
+    auto_created: true
+    target:
+      kind: repository
+      location: /Users/seima/Documents/cursor/agent-os/app
+      cwd: /Users/seima/Documents/cursor/agent-os/app
+      remote_url: ""          # populate from context/app/source.yml when available

@@ -1,0 +1,29 @@
+{
+  "name": "agent-os",
+  "version": "0.1.0",
+  "description": "An open-source operating system for AI-first businesses",
+  "type": "module",
+  "bin": {
+    "agent-os": "./app/server/index.js",
+    "create-agent-os": "./scripts/create-agent-os.js"
+  },
+  "scripts": {
+    "dev": "npm run dev:server & npm run dev:client",
+    "dev:server": "cd app/server && OPS_DIR=../../ops npm run dev",
+    "dev:client": "cd app/client && npm run dev",
+    "start": "node app/server/index.js",
+    "install:all": "cd app/server && npm install && cd ../client && npm install"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "business-os",
+    "kanban",
+    "operations"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.2.81"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+}
