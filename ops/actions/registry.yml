@@ -10,3 +10,12 @@ actions:
       location: /Users/seima/Documents/cursor/agent-os/app
       cwd: /Users/seima/Documents/cursor/agent-os/app
       remote_url: ""          # populate from context/app/source.yml when available
+
+  - id: lint-context
+    name: Lint Context
+    status: active
+    path: actions/lint-context
+    instructions: Audit context/ for staleness, inconsistencies, gaps, and missing indexes.
+    target:
+      kind: filesystem
+      location: context/

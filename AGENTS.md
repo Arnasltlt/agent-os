@@ -13,6 +13,6 @@
 - `ops/` is the dogfood instance used to build Agent OS itself
 - `template/` is the scaffold for new agent-os instances; `instances/solis/` is a stub second instance
 - `mcp-kanban/` provides a kanban MCP view over root `lists/`
-- Business model: open-core (free base + paid premium features or hosting); stage: pre-launch
-- Codex CLI requires the workspace to be a git repo (`git init` needed before `codex exec`)
-- No git remote configured yet; open-source vs private decision (TASK-003) is the key blocker for public launch
+- Business model: fully open source (MIT license); optional hosted version later, not a current priority
+- Public repo: https://github.com/Arnasltlt/agent-os (master branch, tracking origin/master)
+- Convention influenced by three frameworks: Agent OS primitives, Van Clief's ICM, Karpathy's LLM Knowledge Bases

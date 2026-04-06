@@ -1,31 +1,38 @@
 # Agent OS
 
-This project is structured around three primitives: **lists**, **context**, and **actions**. Together they make a business fully legible to you.
+This is the **product source repo** for Agent OS — not an agent-os instance itself.
 
-Read this file first. Then read the folders. The filesystem is the source of truth.
+The convention is documented here. Instances live in `ops/` (dogfood), `template/` (scaffold), and `instances/` (other projects). See [SPEC.md](SPEC.md) for the formal instance layout.
 
-## Structure
+This file documents the **agent-os convention** — the three primitives that make a business legible to any AI agent: **lists**, **context**, and **actions**.
+
+## Instance Structure
+
+Every agent-os instance follows this layout (see [SPEC.md](SPEC.md) for the full schema):
 
 ```
-├── CLAUDE.md          ← You are here
-├── lists/             ← Living task files you maintain
-├── context/           ← Business knowledge you maintain
+instance/
+├── AGENT.md           ← Entry point for agents
+├── list.yml           ← Task queue (what needs to happen)
+├── context/           ← Business knowledge
 │   ├── index.md       ← Auto-maintained table of contents (read this first)
 │   ├── _config/       ← Stable business identity (rarely changes)
 │   └── registry.yml   ← Index of all context sources
-├── actions/           ← Instructions on how to do things
+├── actions/           ← Execution instructions
 │   ├── lint-context/  ← Built-in: audit context health
 │   └── registry.yml   ← Index of all actions
 └── log/               ← Output and archives
 ```
 
-## How to Orient
+The repo root holds product-level planning (`lists/`, `context/`, `actions/`) for developing Agent OS itself. These follow the convention loosely but `ops/` is the canonical dogfood instance.
 
-When you enter this project:
+## How to Orient (Inside an Instance)
 
-1. Read this file. Now you know what this project is and how it's structured.
+When you enter an agent-os instance:
+
+1. Read `AGENT.md`. Now you know where you are and what this instance is.
 2. Read `context/index.md`. Now you have a map of all business knowledge available.
-3. Read the task list in `lists/`. Now you know what needs to happen.
+3. Read `list.yml`. Now you know what needs to happen.
 4. For each task, load only the context sources and actions it references. Don't load everything.
 
 This layered approach matters. The less irrelevant context you load, the better you perform. A task that needs brand guidelines doesn't need competitor research. Read the index to understand what's available, then load what the task asks for, nothing more.

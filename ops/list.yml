@@ -1,207 +1,72 @@
 list:
   - id: TASK-001
     title: Create a new interface that mirrors the input style of the terminal at
-      the bottom. This is going to be a task scheduler. This will allow you to
-      put in some thoughts and the task scheduler will have proper prompts and
-      instructions to actually read the context available and create tasks that
-      are well described and assigned to the specific context that is relevant.
-      Those will be ready to execute tasks.
+      the bottom. This is going to be a task scheduler.
     status: done
     priority: medium
+    context: []
+    actions: [edit-app]
     depends_on: []
   - id: TASK-002
     title: Move task scheduler input into the List view as a compact inline entry
     status: done
     priority: high
-    description: >
-      The task scheduler UI (built in TASK-001) currently lives as a
-      terminal-style input at the bottom of the screen. It needs to be relocated
-      into the List view so that task creation happens in context with the task
-      list itself.
-
-      What needs to be done: - Remove (or hide) the standalone bottom-bar
-      scheduler input from its current
-        location in the layout.
-      - Add a compact task-scheduler entry point inside the List view — for
-      example,
-        a single-line input row at the top or bottom of the task list (similar to how
-        Linear or Todoist embed "Add a task" inline within the list).
-      - The input must remain compact: single-line trigger, expands or opens an
-        inline/modal composer only when the user starts typing or clicks it.
-      - All existing scheduler behaviour (reading context, generating
-      well-described
-        tasks, writing to list.yml) must be preserved exactly — only the placement
-        and trigger UI changes.
-      - The rest of the List view layout (task rows, status badges, etc.) must
-      be
-        unaffected.
-
-      Done when: - The bottom terminal-style scheduler input is no longer
-      visible in the default
-        layout.
-      - A compact "Add task" / scheduler input is present and functional inside
-      the
-        List view.
-      - Creating a task via the new input still produces a correctly-formed task
-      entry
-        in list.yml with the same quality as before.
-    context:
-      - context/app/
-    depends_on:
-      - TASK-001
+    context: [app]
+    actions: [edit-app]
+    depends_on: [TASK-001]
   - id: TASK-003
     title: Add a "+" button to the task list for direct manual task entry
     status: done
     priority: medium
-    description: >
-      The List view currently only supports task creation via the AI-powered
-      scheduler input (TASK-002). Users should also have a lightweight,
-      structural way to add a task directly — without going through the AI
-      planner — for cases where they already know exactly what they want to add.
-
-      What needs to be done: - Add a small "+" icon button to the List view
-      header or footer row,
-        visually distinct from the AI scheduler input so the two entry points
-        are not confused.
-      - Clicking "+" opens a minimal inline form (or expands an inline row)
-        with the following editable fields at minimum: title (required),
-        priority (dropdown: critical / high / medium / low, default: medium),
-        and status (pre-set to "ready", not user-editable at creation time).
-      - On submit, the new task is appended to list.yml with a correctly
-        auto-incremented TASK-NNN id, the provided title, the selected
-        priority, status: ready, and empty depends_on: [].
-      - The description field is optional at creation time; if left blank,
-        the task is saved with no description key (or an empty string).
-      - On cancel or blur-without-input the inline form collapses back to
-        just the "+" button with no changes made.
-      - The existing AI scheduler input (TASK-002) must remain fully
-        functional and visually separate.
-
-      Done when: - A "+" button is visible and accessible in the List view. -
-      Clicking it reveals an inline manual-entry form with title and
-        priority fields.
-      - Submitting the form appends a valid, correctly-IDed task block to
-        list.yml and the new task appears immediately in the list.
-      - Cancelling the form leaves list.yml and the UI unchanged. - The AI
-      scheduler input is unaffected.
-    context:
-      - context/app/
-    depends_on:
-      - TASK-002
+    context: [app]
+    actions: [edit-app]
+    depends_on: [TASK-002]
   - id: TASK-004
-    title: you should be able to add a new task directly from the todo list itself.
-      No priority is needed when selecting it that way.
+    title: Add new task directly from the todo list itself
     status: done
     priority: medium
+    context: [app]
+    actions: [edit-app]
     depends_on: []
   - id: TASK-005
     title: Remove the AI scheduler input section from the List view
     status: done
     priority: high
-    description: >
-      The AI-powered scheduler input (introduced in TASK-001, moved inline in
-      TASK-002) should be completely removed from the UI. Only the lightweight
-      manual task entry (the "+" flow from TASK-003/TASK-004) should remain.
-
-      What needs to be done: - Delete or comment out the scheduler input
-      component and any related
-        state, handlers, and imports in the List view.
-      - Remove any prompt/context-reading logic that was wired exclusively to
-        the scheduler input (calls to the task-planner backend endpoint, if
-        any, that are not used by anything else).
-      - Ensure the "+" manual entry flow is fully intact and unaffected. - Clean
-      up any dead CSS / Tailwind classes left behind by the removed
-        component so the List view layout remains tidy.
-      - No back-end routes that are still used by other features should be
-        removed.
-
-      Done when: - The scheduler input (text field + any surrounding container)
-      is no
-        longer visible or rendered anywhere in the app.
-      - The "+" manual task entry still works correctly end-to-end. - No console
-      errors or broken imports remain after the removal. - The List view layout
-      looks clean with no leftover whitespace or
-        placeholder gaps where the scheduler used to be.
-    context:
-      - context/app/
-    depends_on:
-      - TASK-003
+    context: [app]
+    actions: [edit-app]
+    depends_on: [TASK-003]
   - id: TASK-006
     title: Remove the Scheduler page from the sidebar
     status: done
     priority: high
-    description: >
-      The Scheduler page/component in the sidebar navigation should be
-      completely removed from the application. The scheduler functionality has
-      been fully integrated into the List view via the "+" button for manual
-      task creation (TASK-003/TASK-004). The standalone Scheduler page is now
-      redundant.
-
-      What needs to be done: - Remove the Scheduler page component from the app
-      (locate in client/
-        directory).
-      - Remove the route/navigation link to the Scheduler page from the sidebar
-        navigation menu.
-      - Remove any backend API endpoints that were exclusively used only by the
-        Scheduler page (keep any endpoints still used by other features like
-        the List view task creation).
-      - Clean up all imports and references to the Scheduler component across
-        the codebase.
-      - Verify the router/navigation config no longer references the Scheduler
-        route.
-
-      Done when: - The Scheduler page is no longer visible in the sidebar
-      navigation. - Clicking where the Scheduler link used to be results in no
-      404 or broken
-        state.
-      - No console errors or broken imports remain in the build. - All other
-      navigation and features (List view, etc.) continue to work
-        correctly.
-    context:
-      - context/app/
-    depends_on:
-      - TASK-005
+    context: [app]
+    actions: [edit-app]
+    depends_on: [TASK-005]
   - id: TASK-007
-    title: Make a better distinction visually between the task scheduler and new
-      task. New task should be really inside the ToDo List and scheduluer should
-      have some copy change
+    title: Better visual distinction between task scheduler and new task
     status: done
     priority: medium
+    context: [app]
+    actions: [edit-app]
     depends_on: []
   - id: TASK-008
     title: Change plan with AI to "generate tasks"
     status: done
     priority: medium
+    context: [app]
+    actions: [edit-app]
     depends_on: []
   - id: TASK-009
-    title: remove the new task thing in the  to do list column.
+    title: Remove the new task input from the todo list column
     status: done
     priority: medium
+    context: [app]
+    actions: [edit-app]
     depends_on: []
   - id: TASK-010
     title: Remove all context presets except the repo preset
     status: done
     priority: high
-    description: >
-      The "add context" flow currently displays multiple presets for users to
-      quickly add common context sources. We want to simplify this to only offer
-      the repo preset, which is the most commonly used and well-tested.
-
-      What needs to be done: - Locate the component/code that renders context
-      presets in the "add context"
-        UI (likely in client/ directory, possibly AddContext or ContextForm component).
-      - Identify all current presets and their definitions/configurations. -
-      Remove all preset options except for the repository/repo preset. - Ensure
-      the repo preset remains fully functional with no regressions. - Clean up
-      any unused imports or preset-related config/constants left
-        behind by the removal.
-
-      Done when: - The "add context" UI only displays the repo preset as an
-      option. - No other preset options (folder, database, API, email, etc.) are
-      visible
-        or accessible.
-      - The repo preset works correctly end-to-end. - No console errors or
-      broken code paths remain.
-    context:
-      - context/app/
+    context: [app]
+    actions: [edit-app]
     depends_on: []
