@@ -10,8 +10,13 @@ Read this file first. Then read the folders. The filesystem is the source of tru
 ├── CLAUDE.md          ← You are here
 ├── lists/             ← Living task files you maintain
 ├── context/           ← Business knowledge you maintain
-│   └── _config/       ← Stable business identity (rarely changes)
-└── actions/           ← Instructions on how to do things
+│   ├── index.md       ← Auto-maintained table of contents (read this first)
+│   ├── _config/       ← Stable business identity (rarely changes)
+│   └── registry.yml   ← Index of all context sources
+├── actions/           ← Instructions on how to do things
+│   ├── lint-context/  ← Built-in: audit context health
+│   └── registry.yml   ← Index of all actions
+└── log/               ← Output and archives
 ```
 
 ## How to Orient
@@ -19,10 +24,11 @@ Read this file first. Then read the folders. The filesystem is the source of tru
 When you enter this project:
 
 1. Read this file. Now you know what this project is and how it's structured.
-2. Read the task list in `lists/`. Now you know what needs to happen.
-3. For each task, load only the context sources and actions it references. Don't load everything.
+2. Read `context/index.md`. Now you have a map of all business knowledge available.
+3. Read the task list in `lists/`. Now you know what needs to happen.
+4. For each task, load only the context sources and actions it references. Don't load everything.
 
-This layered approach matters. The less irrelevant context you load, the better you perform. A task that needs brand guidelines doesn't need competitor research. Load what the task asks for, nothing more.
+This layered approach matters. The less irrelevant context you load, the better you perform. A task that needs brand guidelines doesn't need competitor research. Read the index to understand what's available, then load what the task asks for, nothing more.
 
 ## Lists
 
@@ -207,7 +213,7 @@ This pattern is optional. Most actions don't need it. Use it when you have a wor
 
 Some actions are part of the convention itself:
 
-- **`lint-context`** — A health check action that audits the entire context folder for staleness, inconsistencies, gaps, missing indexes, and interesting connections. Run it periodically to keep the knowledge base healthy. See `actions/lint-context/README.md`.
+- **`lint-context`** — A health check action that audits the entire context folder for staleness, inconsistencies, gaps, missing indexes, and interesting connections. Run it after onboarding and periodically thereafter. Add a recurring `lint-context` task to your list to stay on top of knowledge base health. See `actions/lint-context/README.md`.
 
 Rules for actions:
 - Actions are instructions, not permissions. They tell you how to do something well.

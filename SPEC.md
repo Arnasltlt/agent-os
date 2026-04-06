@@ -12,8 +12,11 @@ agent-os-instance/
 ├── AGENT.md
 ├── list.yml
 ├── context/
+│   ├── index.md
+│   ├── _config/
 │   └── registry.yml
 ├── actions/
+│   ├── lint-context/
 │   └── registry.yml
 └── log/
 ```
@@ -22,8 +25,11 @@ Required paths:
 
 - `AGENT.md`: canonical entry point for any agent entering the instance
 - `list.yml`: task queue
+- `context/index.md`: auto-maintained table of contents for all context
 - `context/registry.yml`: read-model index
+- `context/_config/`: stable business identity (factory configuration)
 - `actions/registry.yml`: write/execute-model index
+- `actions/lint-context/`: built-in context health check action
 - `log/`: run output, archives, and other exhaust
 
 Compatibility files such as `CLAUDE.md` and `AGENTS.md` may exist, but `AGENT.md`
@@ -161,7 +167,8 @@ Expected fields:
 - `status`: typically `active`, `needs_setup`, `inactive`, or `draft`
 - `path`: relative path to the action folder inside `actions/`
 - `target.kind`: target type, usually `filesystem` or `repository`
-- `target.location`: canonical writable target location
+- `target.location`: canonical writable target location (absolute path for
+  external targets, relative path for targets inside the instance)
 
 Optional fields commonly used by tooling:
 

@@ -11,4 +11,12 @@
 #     editable: false
 #     description: Core business facts and operating context.
 
-context: []
+context:
+  - id: config
+    name: Business Configuration
+    type: folder
+    path: context/_config
+    status: active
+    stable: true
+    editable: false
+    description: Stable business identity — company facts, brand voice, guidelines. Treat as constraints.

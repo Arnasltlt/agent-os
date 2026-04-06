@@ -6,7 +6,21 @@ Audit the entire `context/` folder for health issues and incrementally improve d
 
 ## When to run
 
-Periodically — after a batch of new context has been added, or when the knowledge base feels stale. Can also be triggered by a task in `list.yml`.
+- After onboarding — run once to verify initial context is complete and indexed
+- After a batch of new context has been added
+- When the knowledge base feels stale or you suspect inconsistencies
+- As a recurring task in `list.yml` (recommended: add a `lint-context` task after onboarding)
+
+Example task entry:
+
+```yaml
+- id: TASK-LINT
+  title: Run context health check
+  status: ready
+  context: []
+  actions: [lint-context]
+  depends_on: []
+```
 
 ## How to execute
 
